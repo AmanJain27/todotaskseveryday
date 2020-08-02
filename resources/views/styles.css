@@ -1,0 +1,56 @@
+@import "https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css";
+body{
+    margin: 0;
+    padding: 0;
+}
+
+
+
+.login-box{
+    background: rgb(0,0,0,0.26);
+    border-radius: 15px;
+    position: absolute;
+    top: 25%;
+    left: 40%;
+    transform: translate(-50% -50%);
+    height: 420px;
+    box-sizing: border-box;
+    padding: 66px 50px;
+    
+}
+
+
+.thumb{
+    
+    border: none; 
+    outline: none; 
+    font-size: 18px; 
+    margin: 0;  
+    float: left; 
+    border-bottom: 1px solid #349b28;
+    margin-bottom: 20px; 
+    background: transparent;
+    
+    transition: all 0.3s ease 0s;
+}
+.thumb:hover{
+    transform: scale(1.1);
+    border-bottom: 1px solid rgb(112, 124, 110);
+}
+
+.btn{
+    
+    margin-top: 20px;
+    position: relative;
+    width: 80%;
+    border: 1px solid #349b28 !important;
+    padding: 2px;
+    float: left;
+    transition: all 0.3s ease 0s;
+}
+
+.btn:hover{
+    background: rgb(0,0,0,0.1);
+    transform :scale(0.9);
+}
+
