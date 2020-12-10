@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Http\Request;
+use \Symfony\Component\HttpFoundation\Response;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,6 +22,14 @@ Route::get('/login', function(){
 	return view('login');
 });
 
-Route::post('/login', function () {
-    return view('login');
-});
+
+
+Route::post('/login/ajax', function (Request $request) {
+    // return view('welcome');
+    // echo "eh";
+    // return redirect('login');
+
+    //echo $request->input('email');
+
+
+})->middleware('checkCred');
