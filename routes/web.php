@@ -33,3 +33,19 @@ Route::post('/login/ajax', function (Request $request) {
 
 
 })->middleware('checkCred');
+
+
+Route::get('/register', function(Request $request){
+
+
+  return view('register');
+
+
+});
+
+Route::post('/register/ajax', function(Request $request){
+
+
+
+
+})->middleware('register');

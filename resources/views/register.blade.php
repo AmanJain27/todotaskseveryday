@@ -20,7 +20,7 @@
 
 .login-box{
     background: rgb(0,0,0,0.6);
-    color: white;
+    color: #349b28;
     border-radius: 15px;
     position: absolute;
     top: 24%;
@@ -43,7 +43,7 @@
     border-bottom: 1px solid #349b28;
     margin-bottom: 30px;
     background: transparent;
-
+    color: white;
     transition: all 0.3s ease 0s;
 }
 .thumb:hover{
@@ -52,7 +52,7 @@
 }
 
 .btn{
-    color: white !important;
+    color: #349b28 !important;
     margin-top: 40px;
     position: relative;
     width: 80%;
@@ -60,7 +60,6 @@
     padding: 2px;
     float: left;
     transition: all 0.3s ease 0s;
-    background: transparent;
 }
 
 .okay{
@@ -98,14 +97,18 @@
             <form method="POST"  id="ajaxform" class="login-box" >
                     @csrf
 
-                    <h1 style="float: left; border-bottom: 4px solid #349b28; margin-bottom: 40px; margin-top: 0px; ">Login</h1>
-                    <!-- <label for="email" class="col-xs-12 col-md-10 col-lg-12 label-box">Email</label> -->
+                    <h1 style="float: left; border-bottom: 4px solid #349b28; margin-bottom: 40px; margin-top: 0px; ">Register</h1>
 
+                    <!-- Name of the person -->
+                    <input type="text" id="name" onkeyup="check_cred()" placeholder="Name" name="email" class="email col-xs-12 col-md-10 col-lg-9 thumb"><br/><br/>
+
+                    <!-- email of the person   -->
                     <input type="email" id="email" onkeyup="check_cred()" placeholder="Email" name="email" class="email col-xs-12 col-md-10 col-lg-9 thumb"><br/><br/>
                    <!-- <label for="email" class="col-xs-12 col-md-10 col-lg-12 label-box">Password</label> -->
                     <input type="password"  id="password" onkeyup="check_cred()" placeholder="Password" name="password" class="col-md-10 col-xs-12 col-xs-12 col-lg-9 thumb" ><br/><br>
+
                     <span  class="success thumb error-style"></span>
-                    <input type="submit" value="submit" name="submit" id="submit" class="save-data btn btn-default" disabled>
+                    <input type="submit" value="register" name="submit" id="submit" class="save-data btn btn-default" disabled>
 
 
             </form>
@@ -133,11 +136,11 @@ function check_cred(){
 
   var btn = document.getElementById("submit");
   var email = document.getElementById("email").value;
-
+  var name = document.getElementById("name").value;
   var password =  document.getElementById("password").value;
   //btn.disabled=true;
   // btn.classList.remove('okay');
-  if(!email.match(reg) || password.length < 8){
+  if(!email.match(reg) || password.length < 8 || name == ""){
 
     btn.classList.remove('okay');
 
@@ -195,9 +198,10 @@ function check_cred(){
 
                   let email = $("input[name=email]").val();
                   let password = $("input[name=password]").val();
+                  let name = $("input[name=name]").val();
                   let _token   = $('meta[name="csrf-token"]').attr('content');
                   $.ajax({
-                    url: '/login/ajax',
+                    url: '/register/ajax',
                     type: "POST",
                     data:{
                       email: email,
