@@ -3,10 +3,13 @@
 namespace App\Http\Middleware;
 use \Illuminate\Http\Request;
 use \Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use \Symfony\Component\HttpFoundation\Response;
+use App\Http\Controllers\Controller;
+
 use Closure;
 
-class checkCred
+class checkCred extends Controller
 {
     /**
      * Handle an incoming request.
@@ -15,8 +18,11 @@ class checkCred
      * @param  \Closure  $next
      * @return mixed
      */
+     use AuthenticatesUsers;
+
     public function handle(Request $request, Closure $next)
     {
+
         $email = $request->input('email');
         $password = $request->input('password');
 
@@ -27,18 +33,30 @@ class checkCred
 
         // maybe execute some database queries to validate the user
 
-        if(!Auth::attempt(["email" => $email, "password" => $password, "active" => 1])){
+        $this->validate($request, [
+            'email' => 'required',
+            'password' => 'required',
+        ]);
+
+
+
+
+
+        if(Auth::attempt(["email" => $email, "password" => $password])){
+
+          return response()->json(["redirect" => "http://127.0.0.1:8000/"]);
+        }
+
+        else{
           $json_res =  response()->json(['user' => $email, 'authenicated' => '0', 'message' => 'Either email or password is incorrect']);
           //return auth_status[0];
           return $json_res;
           // echo $original;
-        }
-        else{
-          return view('user');
+
         }
 
 
 
-        return $next($request);
+        //return $next($request);
     }
 }

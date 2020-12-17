@@ -63,7 +63,7 @@
             }
 
             .button-login{
-                
+
                 border: 1px solid grey;
                 width: 4%;
                 text-align: center;
@@ -74,23 +74,23 @@
         </style>
     </head>
     <body>
-        <form action="/login" method="GET" style="top: 10%; left: 75%">
-            <input type="submit" value="login" class="button-login">
+        <form action="/logout" method="GET" style="top: 10%; left: 75%">
+            <input type="submit" value="Logout" class="button-login">
         </form>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
+        <!-- <div class="flex-center position-ref full-height">
+            @if (Route::has('register'))
                 <div class="top-right links">
                     @auth
                         <a href="{{ url('/dashboard') }}">Dashboard</a>
                     @else
-                        <a href="{{ route('login') }}">Login</a>
+                        <a href="{{ route('logout') }}">Login</a>
 
                         @if (Route::has('register'))
                             <a href="{{ route('register') }}">Register</a>
                         @endif
                     @endauth
                 </div>
-            @endif
+            @endif -->
 
             <div class="content">
                 <div class="title m-b-md">

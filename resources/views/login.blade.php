@@ -34,7 +34,7 @@
 
 
 .thumb{
-
+    color: white;
     border: none;
     outline: none;
     font-size: 18px;
@@ -195,9 +195,9 @@ function check_cred(){
 
                   let email = $("input[name=email]").val();
                   let password = $("input[name=password]").val();
-                  let _token   = $('meta[name="csrf-token"]').attr('content');
+                  let _token   = "{{csrf_token()}}";
                   $.ajax({
-                    url: '/login/ajax',
+                    url: '/ajax',
                     type: "POST",
                     data:{
                       email: email,
@@ -205,13 +205,18 @@ function check_cred(){
                       _token: _token,
                     },
                     success: function(response){
-                      if(response){
+                      if(!response.redirect){
+
                         $('.success').text(response.message);
+                        console.log(response);
                         $("#ajaxform")[0].reset();
                         $("#ajaxform")[0][3].disabled = true;
                         var btn = document.getElementById("submit");
                         btn.classList.remove('okay');
 
+                      }
+                      else{
+                        window.location.replace(response.redirect);
                       }
                     },
                   });

@@ -3,7 +3,7 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="styles.css">
+    <!-- <link rel="stylesheet" href="styles.css"> -->
     <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
     <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -97,17 +97,17 @@
             <form method="POST"  id="ajaxform" class="login-box" >
                     @csrf
 
-                    <h1 style="float: left; border-bottom: 4px solid #349b28; margin-bottom: 40px; margin-top: 0px; ">Register</h1>
+                    <h1 style="float: left; border-bottom: 4px solid #349b28; margin-bottom: 40px; margin-top: 0px; " class="heading">Register</h1>
 
                     <!-- Name of the person -->
-                    <input type="text" id="name" onkeyup="check_cred()" placeholder="Name" name="email" class="email col-xs-12 col-md-10 col-lg-9 thumb"><br/><br/>
+                    <input type="text" id="name" onkeyup="check_cred()" placeholder="Name" name="name" class=" col-xs-12 col-md-10 col-lg-9 thumb"><br/><br/>
 
                     <!-- email of the person   -->
                     <input type="email" id="email" onkeyup="check_cred()" placeholder="Email" name="email" class="email col-xs-12 col-md-10 col-lg-9 thumb"><br/><br/>
                    <!-- <label for="email" class="col-xs-12 col-md-10 col-lg-12 label-box">Password</label> -->
                     <input type="password"  id="password" onkeyup="check_cred()" placeholder="Password" name="password" class="col-md-10 col-xs-12 col-xs-12 col-lg-9 thumb" ><br/><br>
 
-                    <span  class="success thumb error-style"></span>
+                    <span id="text" class="success thumb error-style"></span>
                     <input type="submit" value="register" name="submit" id="submit" class="save-data btn btn-default" disabled>
 
 
@@ -154,10 +154,19 @@ function check_cred(){
   }
 
 
+
+
+
+
 }
 
 
-
+function isNumberKey(evt){
+    var charCode = (evt.which) ? evt.which : event.keyCode
+    if (charCode > 31 && (charCode < 48 || charCode > 57))
+        return false;
+    return true;
+}
 
 
 
@@ -190,31 +199,76 @@ function check_cred(){
 <!-- script for ajax requests -->
     <script>
 
-
-        $(".save-data").click(function(event){
+let _token   = $('meta[name="csrf-token"]').attr('content');
+        $(".save-data").click( function(event){
+          let email = $("input[name=email]").val();
+          let password = $("input[name=password]").val();
+          let name = $("input[name=name]").val();
 
 
                   event.preventDefault();
 
-                  let email = $("input[name=email]").val();
-                  let password = $("input[name=password]").val();
-                  let name = $("input[name=name]").val();
-                  let _token   = $('meta[name="csrf-token"]').attr('content');
+
                   $.ajax({
                     url: '/register/ajax',
                     type: "POST",
                     data:{
+                      name: name,
                       email: email,
                       password: password,
                       _token: _token,
                     },
-                    success: function(response){
+                    success:  function(response){
                       if(response){
-                        $('.success').text(response.message);
-                        $("#ajaxform")[0].reset();
-                        $("#ajaxform")[0][3].disabled = true;
-                        var btn = document.getElementById("submit");
-                        btn.classList.remove('okay');
+
+                        json_res = $.parseJSON(response);
+
+                        count = json_res['COUNT(email)'];
+
+                        if(count==1){
+                          $("#ajaxform")[0].reset();
+                          $("#ajaxform")[0][4].disabled = true;
+                          $("#text").text("Email already in use");
+                          var btn = document.getElementById("submit");
+                          btn.classList.remove('okay');
+                        }
+
+                        else{
+
+                          $.ajax({
+                            url: "/email/verify",
+                            type: "GET",
+                            // data:{
+                            //   name: name,
+                            //   email: email,
+                            //   password: password,
+                            //   _token: _token,
+                            // },
+                            success: function(response){
+                              console.log(response);
+                              $("#ajaxform")[0].reset();
+
+                              $("#text").text(response.message);
+
+                              $(".heading")[0].innerHTML = "Verify Email";
+
+                              //$("#ajaxform")[0][1].placeholder = "Enter Verification Code";
+                              //var btn = document.getElementById("submit");
+
+                              $("#email").remove();
+                              $("#password").remove();
+                              //var email_code = $("#name");
+                              $("#name").remove();
+                              $("#submit").remove();
+                            },
+
+                          });
+
+
+
+
+
+                        }
 
                       }
                     },
