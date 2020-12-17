@@ -84,7 +84,10 @@
     pointer-events: none;
 
 }
-
+.label{
+  margin-top: 20px;
+  border-bottom: none;
+}
 
     </style>
 <!-- https://i.imgur.com/1SnhDEh.jpg -->
@@ -106,7 +109,7 @@
                     <input type="password"  id="password" onkeyup="check_cred()" placeholder="Password" name="password" class="col-md-10 col-xs-12 col-xs-12 col-lg-9 thumb" ><br/><br>
                     <span  class="success thumb error-style"></span>
                     <input type="submit" value="submit" name="submit" id="submit" class="save-data btn btn-default" disabled>
-
+                    <label for="" class="thumb label">If you don't have account <a href="/register">Sign up</a></label>
 
             </form>
 

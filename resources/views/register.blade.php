@@ -83,7 +83,10 @@
     pointer-events: none;
 
 }
-
+.label{
+  margin-top: 20px;
+  border-bottom: none;
+}
 
     </style>
 <!-- https://i.imgur.com/1SnhDEh.jpg -->
@@ -109,6 +112,7 @@
 
                     <span id="text" class="success thumb error-style"></span>
                     <input type="submit" value="register" name="submit" id="submit" class="save-data btn btn-default" disabled>
+                    <label for="" class="thumb label">If you have already registered <a href="/login">Login here</a></label>
 
 
             </form>
@@ -260,6 +264,7 @@ let _token   = $('meta[name="csrf-token"]').attr('content');
                               //var email_code = $("#name");
                               $("#name").remove();
                               $("#submit").remove();
+                              $('.label').remove();
                             },
 
                           });

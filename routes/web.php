@@ -99,7 +99,7 @@ Route::get('/email/verify/{id}/{hash}', function(EmailVerificationRequest $reque
 
     $request->fulfill();
 
-    return redirect('home');
+     return view('home');
 
 
 })->middleware(['auth', 'signed'])->name('verification.verify');

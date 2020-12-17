@@ -38,7 +38,11 @@
       }
 
 
-
+      .logout{
+        position: relative;
+        top: 130px;
+        left: 870px;
+      }
 
     </style>
 
@@ -60,8 +64,16 @@
         <div class="card-body text-justify mx-2 my-4 text-white">
           Your daily tasks and todos are managed below.
         </div>
+        <div class="text-center">
+          <form class="" action="/logout" method="GET">
+            <input type="submit" value="Logout" class=" btn btn-light logout">
+            <!-- <button type="button" class="btn btn-secondary">Secondary</button> -->
+          </form>
 
+
+        </div>
       </div>
+
 
     </div>
 
@@ -168,6 +180,8 @@
       $(".row").remove();
       $("#parent-1").append("hello");
 });
+
+
 
 
 </script>
